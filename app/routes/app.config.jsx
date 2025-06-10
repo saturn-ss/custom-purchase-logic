@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFetcher } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import {
   Page,
   Layout,
@@ -10,7 +10,8 @@ import {
   Box,
   List,
   Link,
-  InlineStack
+  InlineStack,
+  TextField
 } from "@shopify/polaris";
 
 import { authenticate } from "../shopify.server";
@@ -36,8 +37,18 @@ export const loader = async ({ request }) => {
 }
 
 export default function Config() {
+  const existingData = useLoaderData();
   return (
-    <Page></Page>
+    <Page>
+      <Layout>
+        <BlockStack>
+          <InlineStack>
+            <Text>Product A</Text>
+            <TextField />
+          </InlineStack>
+        </BlockStack>
+      </Layout>
+    </Page>
   );
 }
 
