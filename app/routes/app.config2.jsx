@@ -30,13 +30,13 @@ export const loader = async ({ request }) => {
     }
   `);
 
-return existing;
+  return existing;
   const existingDataIndex = existing?.data?.metafieldDefinitions.nodes.findIndex(item => 
     item.key === "purchase" && item.namespace === "data"
   );
 };
 
-export default function Config() {
+export default function Config2() {
   const existing = useLoaderData();
   const existingSData = {};
 
@@ -105,6 +105,31 @@ export default function Config() {
             <BlockStack gap="400">
               <Text as="h3" variant="headingMd">
                 Product B
+              </Text>
+              <Text as="p" variant="bodyMd">
+                Interjambs are the rounded protruding bits of your puzzlie piece
+              </Text>
+            </BlockStack>
+          </Box>
+          <Card roundedAbove="sm">
+            <BlockStack gap="400">
+              <InlineGrid columns={["twoThirds", "oneThird"]} gap={300}>
+                <TextField label="Product ID" />
+                <TextField label="Minium Amount" />
+              </InlineGrid>
+              <Button onClick={selectProduct}>Select Product</Button>
+            </BlockStack>
+          </Card>
+        </InlineGrid>
+        <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
+          <Box
+            as="section"
+            paddingInlineStart={{ xs: 400, sm: 0 }}
+            paddingInlineEnd={{ xs: 400, sm: 0 }}
+          >
+            <BlockStack gap="400">
+              <Text as="h3" variant="headingMd">
+                Product C
               </Text>
               <Text as="p" variant="bodyMd">
                 Interjambs are the rounded protruding bits of your puzzlie piece
