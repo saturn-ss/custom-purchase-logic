@@ -16,8 +16,6 @@ import {
   InlineGrid,
   Divider
 } from "@shopify/polaris";
-import { useAppBridge } from "@shopify/app-bridge-react";
-import { ResourcePicker } from '@shopify/app-bridge/actions';
 
 import { authenticate } from "../shopify.server";
 
@@ -36,37 +34,24 @@ return existing;
   const existingDataIndex = existing?.data?.metafieldDefinitions.nodes.findIndex(item => 
     item.key === "purchase" && item.namespace === "data"
   );
-
-  // If no matching metafield is found, return an empty object
-  if (existingDataIndex === -1) {
-    return {};
-  }
-
-  // Return the matching metafield data
-  return existing?.data?.metafieldDefinitions.nodes[existingDataIndex];
 };
 
 export default function Config() {
   const existing = useLoaderData();
   const existingSData = {};
 
-  const app = useAppBridge();
-
-  const handleOpen = () => {
-    const picker = ResourcePicker.create(app, {
-      resourceType: "Product",
-      selectMultiple: false,
-      showVariants: false,
-    })
-
-    picker.subscribe(ResourcePicker.Action.SELECT, (action) => {
-      const [ product ] = action.payload.selection;
-      onselect(product);
-      picker.unsubscride();
-      picker.close();
+  async function selectProduct(includeProduct) {
+    const products = await window.shopify.resourcePicker({
+      type: "product",
+      action: "select",
     });
 
-    picker.dispatch(ResourcePicker.Action.OPEN);
+    if (products) {
+      const { images, id, variant, title, handle } = products[0];
+      
+      return id;
+    }
+    return null;
   }
 
   const { smUp } = useBreakpoints();
@@ -83,6 +68,9 @@ export default function Config() {
       ]}
     >
       <BlockStack gap={{ xs: "800", sm: "400" }}>
+        <InlineStack gap={300}>
+          <Text variant="headingXl" as="h4">If customer purchase products A and B, customer can only purchase 1 product F</Text>
+        </InlineStack>
         <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
           <Box
             as="section"
@@ -91,7 +79,7 @@ export default function Config() {
           >
             <BlockStack gap="400">
               <Text as="h3" variant="headingMd">
-                InterJambs
+                Product A
               </Text>
               <Text as="p" variant="bodyMd">
                 Interjambs are the rounded protruding bits of your puzzlie piece
@@ -100,9 +88,11 @@ export default function Config() {
           </Box>
           <Card roundedAbove="sm">
             <BlockStack gap="400">
-              <TextField label="Interjamb style" />
-              <Button onClick={handleOpen}>Select Product</Button>
-              <TextField label="Interjamb ratio" />
+              <InlineGrid columns={["twoThirds", "oneThird"]} gap={300}>
+                <TextField label="Product ID" />
+                <TextField label="Minium Amount" />
+              </InlineGrid>
+              <Button onClick={selectProduct}>Select Product</Button>
             </BlockStack>
           </Card>
         </InlineGrid>
