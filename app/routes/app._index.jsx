@@ -96,7 +96,6 @@ export default function Config() {
             </BlockStack>
           </Card>
         </InlineGrid>
-        {smUp ? <Divider /> : null}
         <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
           <Box
             as="section"
@@ -105,7 +104,7 @@ export default function Config() {
           >
             <BlockStack gap="400">
               <Text as="h3" variant="headingMd">
-                Dimensions
+                Product B
               </Text>
               <Text as="p" variant="bodyMd">
                 Interjambs are the rounded protruding bits of your puzzlie piece
@@ -114,8 +113,37 @@ export default function Config() {
           </Box>
           <Card roundedAbove="sm">
             <BlockStack gap="400">
-              <TextField label="Horizontal" />
-              <TextField label="Interjamb ratio" />
+              <InlineGrid columns={["twoThirds", "oneThird"]} gap={300}>
+                <TextField label="Product ID" />
+                <TextField label="Minium Amount" />
+              </InlineGrid>
+              <Button onClick={selectProduct}>Select Product</Button>
+            </BlockStack>
+          </Card>
+        </InlineGrid>
+        <Divider />
+        <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
+          <Box
+            as="section"
+            paddingInlineStart={{ xs: 400, sm: 0 }}
+            paddingInlineEnd={{ xs: 400, sm: 0 }}
+          >
+            <BlockStack gap="400">
+              <Text as="h3" variant="headingMd">
+                Product F
+              </Text>
+              <Text as="p" variant="bodyMd">
+                Interjambs are the rounded protruding bits of your puzzlie piece
+              </Text>
+            </BlockStack>
+          </Box>
+          <Card roundedAbove="sm">
+            <BlockStack gap="400">
+              <InlineGrid columns={["twoThirds", "oneThird"]} gap={300}>
+                <TextField label="Product ID" />
+                <TextField label="Minium Amount" />
+              </InlineGrid>
+              <Button onClick={selectProduct}>Select Product</Button>
             </BlockStack>
           </Card>
         </InlineGrid>
